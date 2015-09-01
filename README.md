@@ -41,4 +41,4 @@ classes.pyc: classes used to structure statistics to be read from the API
 
 download.pyc: functions for building URL names and downloading data from the API 
 
-processing.pyc : function for extracting important statistics from downloaded data
+processing.pyc : function for extracting important statistics from downloaded data 
