@@ -12,9 +12,28 @@ Load mainpage.html in a web brower. Specifically, you can open http://rawgit.com
 
 #Short Description of Scripts:
 
-Order of scripts being run: 
+Order of important scripts being run: 
 
-dl2na.py > fixdl.py > readMatches.js > pca.py > postPcaProcessing.bat > readPickDrop.bat > calcPickDropStats.py
+dl2na.py > fixdl.py > readMatches.js > pca.py > postPcaProcessing.bat > readPickDrop.bat > calcPickDropStats.py > pickdrop_neural.m
+
+Important scripts:
+
+dl2na.py: downloads API data from server
+
+fixdl.py: re-download data that received error codes
+
+readMatches.js: convert downloaded data into statistics
+
+pca.py: principle component analysis on compiled data
+
+postPcaProcessing.bat: reads in postPcaProcessing.py to convert PCA statistics into a presentable format
+
+readPickDrop.bat: reads in dlTimeStamps.py to get number of plays for each champion from raw data
+
+calcPickDropStats.py: prepare statistics for training neural network
+
+pickdrop_neural.m: creates data structure compatible to Matlab neural network app. Run the app to obtain neural network.
+
 
 Python libraries:
 
