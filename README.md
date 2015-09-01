@@ -9,6 +9,7 @@ Moreover, it is interesting to learn if champion mains emerged or disappeared be
 
 #Quick-Start
 Load mainpage.html in a web brower. Specifically, you can open http://rawgit.com/riderShigh/API-2.0/master/mainpage.html. This provides all the interface and information needed to understand this project from the user-end.
+For detailed discussion of the analysis, go to the "Methods" in the webpage.
 
 #Short Description of Scripts:
 
