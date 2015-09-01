@@ -1,3 +1,4 @@
+# class for important statistics to be imported and stored on local disk
 class stats:
 	summonerId = 0;
 	region = '';
@@ -24,10 +25,12 @@ class stats:
 			self.totalKDA = (kills+assists)/float(deaths);
 		self.region = region;
 
+# associates summonerIds to matches played
 class summonerMatchList:
 	summonerId = 0;
 	matchIds = [];
 
+# similar to the stats class but takes in different stats
 class stats2:
 	#summonerId = 0;
 	teamId = 0;

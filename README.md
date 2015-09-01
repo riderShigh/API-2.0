@@ -12,8 +12,14 @@ Load mainpage.html in a web brower. Specifically, you can open http://rawgit.com
 
 #Short Description of Scripts:
 
-Python subroutines:
+Order of scripts being run: 
 
-classes:
-download:
-processing:
+dl2na.py > fixdl.py > readMatches.js > pca.py > postPcaProcessing.bat > readPickDrop.bat > calcPickDropStats.py
+
+Python libraries:
+
+classes.pyc: classes used to structure statistics to be read from the API
+
+download.pyc: functions for building URL names and downloading data from the API 
+
+processing.pyc : function for extracting important statistics from downloaded data
