@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+img{
+	opacity: 1.0;
+}
+body{
+	background-color: #000000;
+	margin: 0;
+	padding: 0;
+	scrollbar-base-color: #333333;
+	scrollbar-track-color: #111111;
+	scrollbar-arrow-color: #000000;
+	scrollbar-3dlight-color: #000000;
+}
+h1{
+	text-indent: 20px
+}
+#header{
+	text-align:center;
+	padding:5px;
+	font-family: "PT Sans Narrow", serif;
+}
+#loadingPic{
+	float: left;
+	width: 300px;
+	text-align: center;
+}
+#stats{
+	float: left;
+	padding: 45px;
+	text-align: center;
+}
+#stats2{
+	float: left;
+	padding: 45px;
+	text-align: center;
+}
+#footer{
+	clear: both;
+}
+
+div.background{
+	background-image: url(https://github.com/riderShigh/API2/blob/master/promoart_2_1920x1080.jpg?raw=true) ;
+	background-repeat: no-repeat;
+	background-size: cover;
+	box-shadow: inset 0px 0px 30px 30px rgba(0,0,0,1);
+	margin-top: 0px;
+	background-attachment: fixed;
+}
+div.transbox{
+	background-color: rgba(255,255,255,0.8);
+	margin-left: 97px;
+	width: 1020px;
+	height: 80%;
+	box-shadow: 0px 0px 15px 15px rgba(0,0,0,1);
+}
+div.pseudobox{
+	background-color: rgba(255,255,255,0);
+}
+div.pseudobox2{
+	text-align: center;
+	background-color: rgba(255,255,255,0);
+	<!--background-color: #000000;-->
+}
+div.itemUsers{
+	text-align: left;
+}
+div.itemUserNames{
+	width:400px;
+}
+span.itemUsage{
+	margin-left: 100px;
+	background-color: rgba(255,255,255,1);
+	text-align: left;
+}
+div.pickDrop_chart{
+	height: 700px;
+}
+div.content{
+	text-align:left;
+	margin-left: 50px;
+	margin-right: 50px;
+	display: block;
+}
+div.neural_chart{
+	margin-top: 18px;
+	text-align: center;
+}
+div.neural_chart2{
+	margin-top: 18px;
+	text-align: center;
+}
+div.champ_pca{
+	margin-top: 18px;
+	margion-bottom: 18px;
+	text-align: center;
+}
+</style>
+
+<!--div.textwrap{
+	background-color: #ffffff;
+	opacity: 0.5;
+}
+</style>-->
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+
+
+</head>
+
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<div class='background'>
+<div class='transbox'>
+<div class='pseudobox'>
+<div id='header'>
+<p id='tth'></p>
+</div>
+<div class='content'>
+<h1>Methods</h1>
+
+<h2>Identifying Who Mains What</h2>
+
+Let's define this a little bit better: We want to find who mains a champion, or could potentially be a good player of a champion. This summoner is what we will call a "Main".
+<br>
+There is no clear-cut universal definition of when you would say someone mains Veigar. Maybe he played 500 games on it. Maybe he consistently dealt a ton of damage during every match he played. These criteria, however, might not translate across champions well.
+You won't expect Lulu to be dealing the same damage to champions as if she were Viktor. In order to define a reasonable metric to evaluate the performance of a summoner, we looked at the following numbers on a specific champion, adjusting how we weigh them on a champion-by-champion basis:
+<ul>
+	<li>Number of games played;</li>
+	<li>Win rate;</li>
+	<li>Play rate compared to other chamions;</li>
+	<li>Number of Kills;</li>
+	<li>Number of Assists; and</li>
+	<li>KDA.</li>
+</ul>
+
+After all of these numbers are loaded, we perform principle component analysis on them (<a href='https://en.wikipedia.org/wiki/Principal_component_analysis'>Wikipedia:PCA</a>). Here is one that is done for Nidalee:
+<br>
+<div class='champ_pca'>
+<img src='https://raw.githubusercontent.com/riderShigh/API2/master/champ_pca.png' style='border:none' opacity='1.0' id='neural_chart1' width=640px></img>
+</div>
+
+Each point is an analyzed set of data from one summoner.
+Close to the three corners of the spread, you should see dots indicating the players with the highest KDA, most number of games played on Nidalee, and that poor guy with the lowest KDA.
+It is interesting to note the summoner with the highest KDA is not at the very edge of the blob, due to how the details go for our PCA and is complete normal.
+Empirically principle component 1 (PC1) appears to be sufficient to identify who is good on this champion.
+Therefore, those on the upper echelon will be considered as a main. Oh and yes, all of them are platinum+ players. 
+
+
+<h3>
+Picking Up and Dropping Champions
+</h3>
+
+This is a bit more complicated than extracting the other stats, which are directly accessible from API raw data (Ok I get it, some do take doing a division, so that technically doesn't count as direct). 
+Again this comes down to questioning how we quantify "picking up" and "dropping". Apparently PCA is not a good choice to analyze this, so we let's direct ourselves to artificial neural networks.
+<br>
+
+A simple thing to look at is the number of games a summoner played on a champion during time windows before and after the patch change. In particular we looked at 3 patches before and after.
+The following plot shows the number of games played during patch 5.13-5.15 (Weight 2) versus that of patch 5.10-5.12 (Weight 1).
+
+
+<div class='neural_chart'>
+<img src='https://raw.githubusercontent.com/riderShigh/API2/master/neural_plot.PNG' style='border:none' opacity='1.0' id='neural_chart1' width=640px></img>
+</div>
+
+Overlaying on the data points is a trained self-organizing map. This is generated using the Matlab Neural Net Clustering add-on. We can use this result to identify 3 regions:
+
+<ul>
+	<li>Green: Most possibly picked up the champion;</li>
+	<li>Red: Most probably dropped a champion; and</li>
+	<li>Blue: Unaffected, hard to tell, maybe, etc. For simplicity let's just call this unchanged.</li>
+</ul>
+
+<div class='neural_chart2'>
+<img src='https://raw.githubusercontent.com/riderShigh/API2/master/neural_plot_colored.JPG' style='border:none' opacity='1.0' id='neural_chart2' width=640px></img>
+</div>
+
+</div>
+
+<div class='pseudobox2'>
+
+
+
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+
+
+<footer>
+<div id='footer'></div>
+</footer>
+</div>
+</div>
+</div>
+
+<script>
+$(function(){
+$(#hs_all).trigger('click');
+});
+</script>
+
+</body>
+
+</html>
