@@ -11,7 +11,7 @@ Moreover, it is interesting to learn if champion mains emerged or disappeared be
 Load mainpage.html in a web brower. Specifically, you can open http://rawgit.com/riderShigh/API-2.0/master/mainpage.html. This provides all the interface and information needed to understand this project from the user-end.
 For detailed discussion of the analysis, go to the "Methods" in the webpage.
 
-*Note on items:* We only present items relevant to AP item users in our item statistics. All smites are listed as blue smites. Only highest tier AP items, Trinity Force, and defensive items are displayed. Trinity Force usage would indicate champions that could be choose between an AD or AP build path. Since further discussion on AD builds would digress from our theme, items such as Blade of the Ruined King are not shown.
+*Note on items:* We only present items relevant to AP item users in our item statistics. All smites are listed as blue smites. Only highest tier AP items, Trinity Force, and defensive items are displayed. Trinity Force usage would indicate champions that could be choose between an AD or AP build path. Since further discussion on AD builds would digress from our theme, items such as Blade of the Ruined King shall remain hidden. By the same token, support items would also be left out.
 
 #Data Usage
 Initial match data were taken from the API using the original downloadable match list provided on the contest page. All regions were used, while only ranked games were analyzed as an attempt to reduce randomness in plays by only considering more serious players. In addition match list data is used for identified champion mains to train our neural network. For the sake of conciseness only analysis from heavy AP item users and AP items were presented. 
