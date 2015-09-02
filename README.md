@@ -18,7 +18,7 @@ Initial match data were taken from the API using the original downloadable match
 
 Order of important scripts being run: 
 
-dl2na.py > fixdl.py > readMatches.js > pca.py > postPcaProcessing.bat > readPickDrop.bat > calcPickDropStats.py > pickdrop_neural.m
+dl2na.py > fixdl.py > readMatches.js > pca.py > postPcaProcessing.bat > readPickDrop.bat > calcPickDropStats.py > pickdrop_neural.m > generateWebpage.py
 
 **Important scripts**:
 
@@ -38,6 +38,7 @@ dl2na.py > fixdl.py > readMatches.js > pca.py > postPcaProcessing.bat > readPick
 
 - *pickdrop_neural.m*: creates data structure compatible to Matlab neural network app. Run the app to obtain neural network.
 
+- *generateWebpage.py*: to be run after main.html (the template page) is edited. Generates all champion pages automatically.
 
 **Python libraries**:
 
