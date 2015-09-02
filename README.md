@@ -11,6 +11,9 @@ Moreover, it is interesting to learn if champion mains emerged or disappeared be
 Load mainpage.html in a web brower. Specifically, you can open http://rawgit.com/riderShigh/API-2.0/master/mainpage.html. This provides all the interface and information needed to understand this project from the user-end.
 For detailed discussion of the analysis, go to the "Methods" in the webpage.
 
+#Data Usage
+Initial match data were taken from the API using the original downloadable match list provided on the contest page. All regions were used, while only ranked games were analyzed as an attempt to reduce randomness in plays by only considering more serious players. In addition match list data is used for identified champion mains to train our neural network. For the sake of conciseness only analysis from heavy AP item users and AP items were presented. 
+
 #Short Description of Scripts:
 
 Order of important scripts being run: 
