@@ -1,4 +1,4 @@
-**API Challenge 2.0
+*API Challenge 2.0*
 # AP Champions: Mains vs Non-Mains 
 
 #Introduction
