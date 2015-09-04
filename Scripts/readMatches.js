@@ -1,19 +1,28 @@
+/* ************************************************
+	readMatches.js
+	Script for identifying players of a champion
+	
+	0. Run dl2na.py before this
+	1. Read from downloaded matches
+	2. Search through participants for champion
+	   usage
+	3. Identify if the participant is plat+
+	4. Save match Ids and summoner Ids that
+	   used a champion to file
+************************************************ */
 var fs = require('fs');
 
-//var matchId = JSON.parse(fs.readFileSync('./one_datum/NA.json'));
-var region = ['BR','EUNE','EUW','KR','LAN','LAS','NA','OCE','RU','TR'];
-//region = ['KR'];
+// Define regions, patches, tiers, AP champion Ids, and output objects
+var region = ['BR','EUNE','EUW','KR','LAN','LAS','NA','OCE','RU','TR']; //region = ['KR'];
 var patch = ['5.11','5.14'];
 var highTier = ['CHALLENGER','MASTER','DIAMOND','PLATINUM'];
-//var region = ['EUW','NA'];
-//var patch = ['5.11','5.14'];
 var mageList = JSON.parse(fs.readFileSync('mages.json'));
 var outputMatches = {};
 var outputMains = {};
-
 var outputGoodMains = {};
 var outputGoodMainMatches = {};
 
+// Initialize output objects
 for(var pat=0; pat<patch.length; pat++){
 	outputMatches[patch[pat]] = {};
 	outputMains[patch[pat]] = {};
@@ -21,14 +30,17 @@ for(var pat=0; pat<patch.length; pat++){
 	outputGoodMains[patch[pat]] = {};
 }
 
-
+// Loop through patches
 for(var pat=0; pat<patch.length; pat++){
 	//outputMatches[patch[pat]] = {};
 	//outputMains[patch[pat]] = {};
 	//outputGoodMainMatches[patch[pat]] = {};
 	//outputGoodMains[patch[pat]] = {};
+
+	// Loop through regions
 	for(var reg=0; reg<region.length; reg++){
 
+		// Define temporary objects and lists to save Ids
 		var champMatches = {};
 		var champMains = {};
 		var champCounts = {};
@@ -46,6 +58,7 @@ for(var pat=0; pat<patch.length; pat++){
 			}
 		}
 
+		// Open match file
 		var matchId = JSON.parse(fs.readFileSync('./AP_ITEM_DATASET/' + patch[pat] + '/RANKED_SOLO/' + region[reg] + '.json'));
 		console.log('./AP_ITEM_DATASET/' + patch[pat] + '/RANKED_SOLO/' + region[reg] + '.json');
 		var data = '';
@@ -53,17 +66,18 @@ for(var pat=0; pat<patch.length; pat++){
 		var line = '';
 		var champCount = 0;
 
+		// Loop through match Ids in match file
 		for(var i=0;i<10000;i++){
 			filePath = './' + patch[pat] + '/RANKED_SOLO/' + region[reg] + '/' + matchId[i] + '.json';
-			//var stats = fs.statSync(filePath);
-			//fileSize = stats['size'];
-			//if(fileSize < 12000){continue;}
-			try{ //ascii
+
+			// Read json data from a match
+			try{
 				data = JSON.parse(fs.readFileSync(filePath,'utf8'));
 			}catch(err){
 				continue;
 			}
 			
+			// Check champion usage by champion Id for both plat+ players and everyone
 			for(var j=0; j<10; j++){
 				if(mageList.hasOwnProperty(data.participants[j].championId)){
 					champMatches[(data.participants[j].championId).toString()].push(matchId[i]);
@@ -81,8 +95,7 @@ for(var pat=0; pat<patch.length; pat++){
 			
 		}
 
-		//console.log(JSON.stringify(ahriMatches));
-
+		// Save objects to file
 		outputMatches[patch[pat]][region[reg]] = champMatches;
 		outputMains[patch[pat]][region[reg]] = champMains;
 		outputGoodMainMatches[patch[pat]][region[reg]] = champGoodMainMatches;
