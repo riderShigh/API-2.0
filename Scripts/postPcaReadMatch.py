@@ -1,3 +1,15 @@
+# ************************************************
+# 	postPcaReadMatch.py
+#	Compile presentable statistics for
+#	mains and non-mains
+#	
+#	Usage: python postPcaReadMatch.py [champion] [patch]
+#
+#	Statistics including KDA, DPS, DPS to champions,
+#	time CC dealt, win rate, item usage, and total
+#	games played. 
+# ************************************************
+
 import sys
 import urllib, json, os, numpy, math
 from numpy import linalg, ndarray
@@ -9,11 +21,13 @@ from classes import *
 from processing import *
 py.sign_in('pa1087','5lnuuhu8xi');
 
+# Define patch, champion, and region
 thisPatch = sys.argv[2];
 thisChamp = sys.argv[1];
 
 region = ['BR','EUNE','EUW','KR','LAN','LAS','NA','OCE','RU','TR'];
 
+# Open files containing summoner Ids and match Ids
 fGoodHighPlayerIds = open('./champGoodHighStats/champGoodHighMainStats_' + thisPatch + '_' + thisChamp + '.json');
 goodHighPlayerIds = json.loads(fGoodHighPlayerIds.read());
 
@@ -26,6 +40,7 @@ matchList = json.loads(fMatchList.read());
 fAvgMatchList = open('./champMatches.json');
 avgMatchList = json.loads(fAvgMatchList.read());
 
+# Initialize statistics objects
 gamesRecorded = {'avg':0,'mains':0};
 gamesWon = {'avg':0,'mains':0};
 kda = {'win':{'avg':0,'mains':0},'lose':{'avg':0,'mains':0}};
@@ -40,20 +55,29 @@ kdaLoseCount = {'avg':0,'mains':0};
 ghpInd = 0;
 maxI = len(goodHighPlayerIds);
 
+# Loop over regions
 for reg in xrange(0,len(region)):
 	print str(region[reg]);
 	length = len(avgMatchList[thisPatch][region[reg]][thisChamp]);
 
+	# Loop through matches where the desired champion was played
 	for i in xrange(0,length):
 		if i%50==0: print str(i) + ' out of ' + str(length);
+
+		# Load match
 		fMatch = open('./' + thisPatch + '/RANKED_SOLO/' + region[reg] + '/' + str(avgMatchList[thisPatch][region[reg]][thisChamp][i]) + '.json');
 		match = json.loads(fMatch.read());
 		gamesRecorded['avg'] += 1;
 		isPartLoopDone = 0;
 
+		# Loop through all 10 summoners
 		for j in xrange(0,10):
 			if isPartLoopDone == 1: continue;
+
+			# Identify who played the desired champion
 			if match['participants'][j]['championId'] == int(thisChamp):
+
+				# Read statistics for this summoner
 				thisMatchStats = match['participants'][j]['stats'];
 				thisKDA = 1;
 
