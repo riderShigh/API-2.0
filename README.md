@@ -20,7 +20,7 @@ Initial match data were taken from the API using the original downloadable match
 
 Order of important scripts being run: 
 
-dl2na.py > fixdl.py > readMatches.js > pca.py > postPcaProcessing.bat > readPickDrop.bat > filterPickDrop.bat > calcPickDropStats.py > pickdrop_neural.m > generateWebpage.py
+dl2na.py > fixdl.py > readMatches.js > pca.py > postPcaProcessing.bat > readPickDrop.bat > filterPickDrop.bat > pickdrop_neural.m > calcPickDropStats.py > generateWebpage.py
 
 **Important scripts**:
 
@@ -38,9 +38,9 @@ dl2na.py > fixdl.py > readMatches.js > pca.py > postPcaProcessing.bat > readPick
 
 - *filterPickDrop.bat*: reads in filterPatchDates.py to filter out games not played on patches 5.10-5.16
 
-- *calcPickDropStats.py*: prepare statistics for training neural network
-
 - *pickdrop_neural.m*: creates data structure compatible to Matlab neural network app. Run the app to obtain neural network.
+
+- *calcPickDropStats.py*: prepare statistics for training neural network
 
 - *generateWebpage.py*: to be run after main.html (the template page) is edited. Generates all champion pages automatically.
 
