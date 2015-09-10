@@ -40,7 +40,7 @@ dl2na.py > fixdl.py > readMatches.js > pca.py > postPcaProcessing.bat > readPick
 
 - *pickdrop_neural.m*: creates data structure compatible to Matlab neural network app. Run the app to obtain neural network.
 
-- *calcPickDropStats.py*: prepare statistics for training neural network
+- *calcPickDropStats.py*: use critera determined by our neural network to differentiate picking and dropping champions
 
 - *generateWebpage.py*: to be run after main.html (the template page) is edited. Generates all champion pages automatically.
 
