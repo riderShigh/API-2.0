@@ -18,7 +18,11 @@ body{
 	scrollbar-3dlight-color: #000000;
 }
 h1{
-	text-indent: 20px
+	text-indent: 20px;
+}
+br{
+	display: block;
+	margin: 10px 0;
 }
 #header{
 	text-align:center;
@@ -42,6 +46,11 @@ h1{
 }
 #footer{
 	clear: both;
+}
+#championName{
+	margin-top: 10px;
+	margin-bottom: 14px;
+	line-height: 135%;
 }
 
 div.background{
@@ -85,6 +94,7 @@ span.itemUsage{
 div.pickDrop_chart{
 	height: 700px;
 }
+
 </style>
 
 <!--div.textwrap{
@@ -160,35 +170,16 @@ $(document).ready(function(){
 <p id='tth'></p>
 </div>
 <div id='loadingPic'>
-<h1>Twisted Fate</h1>
+<div id='championName'></div>
 <img src='http://ddragon.leagueoflegends.com/cdn/img/champion/loading/TwistedFate_0.jpg' style='border:none' opacity='1.0'></img>
 <p id='midFrame'> </p>
-
-<!--<script type='text/javascript'>
-var itemUrl = "https://raw.githubusercontent.com/riderShigh/API2/master/bigItemNameIds.json";
-var xmlhttpI = new XMLHttpRequest();
-
-xmlhttpI.onreadystatechange=function() {
-	if (xmlhttpI.readyState == 4 && xmlhttpI.status == 200) {
-		loadItems(xmlhttpI.responseText);
-	}
-}
-xmlhttpI.open("GET", itemUrl, true);
-xmlhttpI.send();
-
-function loadItems(response){
-	var arrItems = JSON.parse(response);
-	document.getElementById('tth').innerHTML = arrItems['eune'][];
-}
-
-</script>-->
-
+<div id='championLore'></div>
 </div>
 
 <div class='pseudobox2'>
 
 <div> 
-    <p>Click on a button to show/hide a chart. <br>Hover over chart elements to compare across patches.</p>
+    <p>Click on a button to show/hide a chart. <br>Hover on bars to compare across patches.</p>
 <br>
 </div>
 
@@ -231,10 +222,29 @@ var xmlhttp = new XMLHttpRequest();
 var xmlhttp2 = new XMLHttpRequest();
 var xmlhttp4 = new XMLHttpRequest(); 
 var xmlhttp3 = new XMLHttpRequest();
-var url = "https://raw.githubusercontent.com/riderShigh/API2/master/statsCompare/5.11/4/champStats.json";
-var url2 = "https://raw.githubusercontent.com/riderShigh/API2/master/statsCompare/5.14/4/champStats.json";
-var url3 = "https://raw.githubusercontent.com/riderShigh/API2/master/bigItemNameIds.json";
-var url4 = "https://raw.githubusercontent.com/riderShigh/API2/master/pickDropStats/tallied/4.json";
+var xmlhttp5 = new XMLHttpRequest();
+var url = "https://raw.githubusercontent.com/riderShigh/API-2.0/master/statsCompare/5.11/4/champStats.json";
+var url2 = "https://raw.githubusercontent.com/riderShigh/API-2.0/master/statsCompare/5.14/4/champStats.json";
+var url3 = "https://raw.githubusercontent.com/riderShigh/API-2.0/master/bigItemNameIds.json";
+var url4 = "https://raw.githubusercontent.com/riderShigh/API-2.0/master/pickDropStats/tallied/4.json";
+var url5 = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion/4?champData=lore&api_key=ac3b3bf8-1aa6-4570-8a84-8163ba9e0a89";
+
+xmlhttp5.onreadystatechange=function(){
+	if (xmlhttp5.readyState == 4 && xmlhttp5.status == 200) {
+		championDescription(xmlhttp5.responseText);
+	}
+}
+
+xmlhttp5.open("GET", url5, false);
+xmlhttp5.send();
+
+function championDescription(responseInfo){
+	var arrInfo = JSON.parse(responseInfo);
+	var outName, outTitle, outLore;
+	outName = '<b><font size="15">' + arrInfo.name + '</font></b><br>';
+	outTitle = '<i>' + arrInfo.title + '</i><br>';
+	document.getElementById('championName').innerHTML = outName + outTitle;
+}
 
 xmlhttp.onreadystatechange=function() {
 	if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -290,15 +300,6 @@ function plot(response1,response2,response3){
 	google.setOnLoadCallback(drawStacked);
 	
 	function drawStacked() {
-      
-	  /*var data = google.visualization.arrayToDataTable([
-        ['Games Played', 'Wins', 'Loses',{role:'annotation'}],
-        ['5.11 Avg', arr.gamesWon.avg, arr.gamesRecorded.avg-arr.gamesWon.avg, oldavg.toString()],
-		['5.11 Mains', arr.gamesWon.mains, arr.gamesRecorded.mains-arr.gamesWon.mains, oldmains.toString()],
-		['5.14 Avg', arr2.gamesWon.avg, arr2.gamesRecorded.avg-arr2.gamesWon.avg, newavg.toString()],
-		['5.14 Mains', arr2.gamesWon.mains, arr2.gamesRecorded.mains-arr2.gamesWon.mains, newmains.toString()],
-		
-      ]);*/
 	  
 	  var tooltip0 = 'Win Rate = ' + pV(oldavg) + '%\n' + showSign(oldavg-newavg) + '% compared to 5.14';
 	  var tooltip1 = 'Win Rate = ' + pV(newavg) + '%\n' + showSign(newavg-oldavg) + '% compared to 5.11';
