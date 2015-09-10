@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			body{
+				background-color: #000000;
+				scrollbar-base-color: #444444;
+				scrollbar-track-color: #000000;
+			} 
+
+			a:hover{
+				background-color: #ff0000;
+				border: 5px;
+			}
+			
+			span.logoBar{
+				color: #ffd700;
+				font-size: 1.5em;
+				text-shadow: 0px 0px 3px #000000, 0px 0px 5px #cdf500;
+			}
+			h3{
+				text-align: center
+			}
+			div.foot{
+				color: #ffffff;
+			}
+			span.method{
+				float: right;
+				color: #ffffff;
+			}
+			
+		</style>
+	</head>
+	
+	<header>
+		<span class='logoBar'>
+			<!--<h3>AP Champs: Mains vs Non-Mains</h3>-->
+			<img src='https://raw.githubusercontent.com/riderShigh/API-2.0/master/html/logo.JPG' height='65px'>
+			<span class='method'>
+				<a href='http://rawgit.com/riderShigh/API-2.0/master/html/methods.html' target='dataFrame'>Method</a>
+			</span>
+			<br>
+		</span>
+	</header>
+	
+	<body>
+		<div class='midframe'>
+			<iframe src='http://rawgit.com/riderShigh/API-2.0/master/html/Ahri.html' align='middle' style="border:none" width=100% height="717" name='dataFrame'>
+				<!--src='http://rawgit.com/riderShigh/API-2.0/master/intro.html'-->
+			</iframe>
+		</div>
+		<br>
+	</body>
+	 
+	<nav>
+		<div id='id01'>
+
+		</div>
+	
+		<script type='text/javascript'>
+			var xmlhttp = new XMLHttpRequest();
+			var url = "https://raw.githubusercontent.com/riderShigh/API-2.0/master/html/mages.json";
+
+			xmlhttp.onreadystatechange=function() {
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					getMageListIcons(xmlhttp.responseText);
+				}
+			}
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send();
+			
+			function getMageListIcons(response){
+				var out = '';
+				var mageList = JSON.parse(response);
+				var lineSkip = 0;
+				var champList = [];
+				var champList2 = [];
+				
+				
+				for(var key in mageList){
+					var champName = mageList[key];
+					champName = champName.replace(/\s+/g,'');
+					champName = champName.replace(/\'/g,'');
+					champName = champName.toLowerCase();
+					champName = champName.charAt(0).toUpperCase() + champName.slice(1);
+					if(champName=='Twistedfate'){champName = 'TwistedFate';}
+					if(champName=='Kogmaw'){champName = 'KogMaw';}
+					if(champName=='Fiddlesticks'){champName = 'FiddleSticks';}
+					champList.push(champName);
+				}
+				
+				champList = champList.sort();
+				
+				for(var c=0; c<champList.length; c++){
+					var iconUrl = '"http://ddragon.leagueoflegends.com/cdn/5.16.1/img/champion/' + champList[c] +'.png"';
+					var iconLink = 'http://rawgit.com/riderShigh/API-2.0/master/html/' + champList[c] + '.html';
+					out += "<span class='Icon" + c + "'><a href='" + iconLink + "' target='dataFrame'><img src=" + iconUrl + " width='50px'></img></a></span>  ";
+					//out += "<img src='http://ddragon.leagueoflegends.com/cdn/5.16.1/img/champion/FiddleSticks.png'></img>";
+					//out += iconUrl +'<br>';
+					//out += champName + '<br>'
+					
+				}
+				document.getElementById('id01').innerHTML = out;
+			}
+			
+		</script>
+	
+
+	</nav>
+	<footer>
+		<div class='foot'>
+			<br>
+			"AP Champs: Mains vs Non-Mains" isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends (c) Riot Games, Inc.
+		</div class>
+	</footer>
+</html>
