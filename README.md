@@ -20,7 +20,7 @@ Initial match data were taken from the API using the original downloadable match
 
 Order of important scripts being run: 
 
-dl2na.py > fixdl.py > readMatches.js > pca.py > postPcaProcessing.bat > readPickDrop.bat > calcPickDropStats.py > pickdrop_neural.m > generateWebpage.py
+dl2na.py > fixdl.py > readMatches.js > pca.py > postPcaProcessing.bat > readPickDrop.bat > filterPickDrop.bat > calcPickDropStats.py > pickdrop_neural.m > generateWebpage.py
 
 **Important scripts**:
 
@@ -35,6 +35,8 @@ dl2na.py > fixdl.py > readMatches.js > pca.py > postPcaProcessing.bat > readPick
 - *postPcaProcessing.bat*: reads in postPcaProcessing.py to convert PCA statistics into a presentable format
 
 - *readPickDrop.bat*: reads in dlTimeStamps.py to get number of plays for each champion from raw data
+
+- *filterPickDrop.bat*: reads in filterPatchDates.py to filter out games not played on patches 5.10-5.16
 
 - *calcPickDropStats.py*: prepare statistics for training neural network
 
